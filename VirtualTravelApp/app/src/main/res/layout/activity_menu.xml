@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="10dp">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Chọn nhu cầu bạn muốn"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:gravity="center"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="10dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Giá tiền: "
+            android:textSize="20sp"
+            android:textStyle="bold"/>
+
+        <RadioGroup
+            android:id="@+id/radioGroupPrice"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="4">
+
+            <RadioButton
+                android:id="@+id/radioBtn12"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="1tr - 2tr"
+                android:textSize="20sp"
+                android:layout_weight="3"/>
+
+            <RadioButton
+                android:id="@+id/radioBtn34"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="3tr - 4tr"
+                android:textSize="20sp"
+                android:layout_weight="1"/>
+
+        </RadioGroup>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="10dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Độ tuổi: "
+            android:textSize="20sp"
+            android:textStyle="bold"/>
+
+        <RadioGroup
+            android:id="@+id/radioGroupAge"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="4">
+
+            <RadioButton
+                android:id="@+id/radioBtnDuoi18"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Dưới 18t"
+                android:textSize="20sp"
+                android:layout_weight="3"/>
+
+            <RadioButton
+                android:id="@+id/radioBtnTren18"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Trên 18t"
+                android:textSize="20sp"
+                android:layout_weight="1"/>
+
+        </RadioGroup>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="10dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Thời tiết: "
+            android:textSize="20sp"
+            android:textStyle="bold"/>
+
+        <RadioGroup
+            android:id="@+id/radioGroupWeather"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="4">
+
+            <RadioButton
+                android:id="@+id/radioBtnNong"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Nóng"
+                android:textSize="20sp"
+                android:layout_weight="1"/>
+
+            <RadioButton
+                android:id="@+id/radioBtnLanh"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Lạnh"
+                android:textSize="20sp"
+                android:layout_weight="1"/>
+
+            <RadioButton
+                android:id="@+id/radioBtnBTh"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Bình thường"
+                android:textSize="20sp"
+                android:layout_weight="1"/>
+
+        </RadioGroup>
+
+    </LinearLayout>
+
+</LinearLayout>
