@@ -74,7 +74,7 @@ public class HotelAdapter extends BaseAdapter{
 
 		public void bind(Hotel hotel){
 			tvNameR.setText(hotel.getName());
-			tvPhoneR.setText(hotel.getPrice() + " VNĐ");
+			tvPhoneR.setText(hotel.getPhone() + "\n" + hotel.getPrice() + " VNĐ");
 //			imgRestaurant.setImageResource(hotel.getImage());
 			boolean a = list.get(0).getImage().startsWith("/9j/");
 			if (a) {

@@ -29,15 +29,15 @@ public class SignupActivity extends AppCompatActivity {
     }
 
     private void Signup() {
-        String username = edtSignupUsername.getText().toString().trim();
+        String username =  edtSignupUsername.getText().toString().trim();
         String password = edtSignupPassword.getText().toString().trim();
         String name = edtSignupName.getText().toString().trim();
         String phone = edtSignupPhone.getText().toString().trim();
         String email = edtSignupEmail.getText().toString().trim();
         String confirmPassword = edtSignupConfirmPassword.getText().toString().trim();
 
-        if (username == "" || password == "" ||
-                name == "" || phone =="" || email == "") {
+        if (username.equals("") || password.equals("") ||
+                name.equals("") || phone.equals("") || email.equals("")) {
             Toast.makeText(SignupActivity.this, "Vui lòng điền đầy đủ thông tin", Toast.LENGTH_SHORT).show();
         }
         else {

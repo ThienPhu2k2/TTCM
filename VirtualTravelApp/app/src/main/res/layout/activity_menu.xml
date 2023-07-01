@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical"
     android:padding="10dp">
 
@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Chọn nhu cầu bạn muốn"
-        android:textSize="20sp"
+        android:textSize="25sp"
         android:textStyle="bold"
         android:gravity="center"/>
 
@@ -27,25 +27,25 @@
             android:textStyle="bold"/>
 
         <RadioGroup
-            android:id="@+id/radioGroupPrice"
+            android:id="@+id/radioGroup1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:weightSum="4">
 
             <RadioButton
-                android:id="@+id/radioBtn12"
+                android:id="@+id/radioBtn1_1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="1tr - 2tr"
+                android:text="500k - 2,5tr"
                 android:textSize="20sp"
                 android:layout_weight="3"/>
 
             <RadioButton
-                android:id="@+id/radioBtn34"
+                android:id="@+id/radioBtn1_2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="3tr - 4tr"
+                android:text="2,5tr - 4tr"
                 android:textSize="20sp"
                 android:layout_weight="1"/>
 
@@ -67,14 +67,14 @@
             android:textStyle="bold"/>
 
         <RadioGroup
-            android:id="@+id/radioGroupAge"
+            android:id="@+id/radioGroup2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:weightSum="4">
 
             <RadioButton
-                android:id="@+id/radioBtnDuoi18"
+                android:id="@+id/radioBtn2_1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Dưới 18t"
@@ -82,7 +82,7 @@
                 android:layout_weight="3"/>
 
             <RadioButton
-                android:id="@+id/radioBtnTren18"
+                android:id="@+id/radioBtn2_2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Trên 18t"
@@ -107,38 +107,38 @@
             android:textStyle="bold"/>
 
         <RadioGroup
-            android:id="@+id/radioGroupWeather"
+            android:id="@+id/radioGroup3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:weightSum="4">
 
             <RadioButton
-                android:id="@+id/radioBtnNong"
+                android:id="@+id/radioBtn3_1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Nóng"
                 android:textSize="20sp"
-                android:layout_weight="1"/>
+                android:layout_weight="3"/>
 
             <RadioButton
-                android:id="@+id/radioBtnLanh"
+                android:id="@+id/radioBtn3_2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Lạnh"
                 android:textSize="20sp"
                 android:layout_weight="1"/>
 
-            <RadioButton
-                android:id="@+id/radioBtnBTh"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Bình thường"
-                android:textSize="20sp"
-                android:layout_weight="1"/>
-
         </RadioGroup>
 
     </LinearLayout>
+
+    <Button
+        android:id="@+id/btnOk"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:text="ok"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"/>
 
 </LinearLayout>

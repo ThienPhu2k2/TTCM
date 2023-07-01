@@ -83,7 +83,7 @@ public class AdminDiaDanhAdapter extends BaseAdapter {
                             Toast.makeText(context, "Xóa thành công", Toast.LENGTH_SHORT).show();
                         }
                         else {
-                            Toast.makeText(context, "Xóa không thành công", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(context, "Không thể xóa địa điểm này!", Toast.LENGTH_SHORT).show();
                         }
 
                         list = db.getDiaDanh();

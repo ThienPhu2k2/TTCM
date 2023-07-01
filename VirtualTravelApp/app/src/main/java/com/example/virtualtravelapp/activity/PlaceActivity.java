@@ -2,6 +2,7 @@ package com.example.virtualtravelapp.activity;
 
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -9,15 +10,20 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Base64;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -46,8 +52,15 @@ public class PlaceActivity extends AppCompatActivity {
     Bitmap bitmap;
 	static int i = 1;
 	int id;
+
+    private AlertDialog dialog;
+
     //search
     @BindView(R.id.etSearch) EditText etSearch;
+
+    Button btnFilter, btnOk;
+
+    RadioGroup radioGroup1, radioGroup2, radioGroup3;
     @BindView(R.id.tvEmpty) TextView tvEmpty;
     private final int REQ_CODE_SPEECH_INPUT = 100;
     @Override
@@ -58,6 +71,8 @@ public class PlaceActivity extends AppCompatActivity {
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         id = getIntent().getIntExtra("id_diadanh", 0);
+        btnFilter = (Button) findViewById(R.id.btnFilter);
+
 
         db = new DBManager(this);
         textChange();
@@ -74,7 +89,112 @@ public class PlaceActivity extends AppCompatActivity {
 
         }
 
+        btnFilter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showDialog();
+
+            }
+        });
+
     }
+
+    private void showDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        LayoutInflater inflater = getLayoutInflater();
+        View dialogView = inflater.inflate(R.layout.activity_menu, null);
+        builder.setView(dialogView);
+
+        Button buttonInsideDialog = dialogView.findViewById(R.id.btnOk);
+        radioGroup1 = (RadioGroup) dialogView.findViewById(R.id.radioGroup1);
+        radioGroup2 = (RadioGroup) dialogView.findViewById(R.id.radioGroup2);
+        radioGroup3 = (RadioGroup) dialogView.findViewById(R.id.radioGroup3);
+        buttonInsideDialog.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                RadioButton radioButton1;
+                String selectedValue1;
+                RadioButton radioButton2;
+                String selectedValue2;
+                RadioButton radioButton3;
+                String selectedValue3;
+                if(radioGroup1.getCheckedRadioButtonId() != -1){
+                    radioButton1 = dialogView.findViewById(radioGroup1.getCheckedRadioButtonId());
+                    selectedValue1 = radioButton1.getText().toString();
+                } else {
+                    selectedValue1 = "0";
+                }
+                if(radioGroup2.getCheckedRadioButtonId() != -1) {
+                    radioButton2 = dialogView.findViewById(radioGroup2.getCheckedRadioButtonId());
+                    selectedValue2 = radioButton2.getText().toString();
+                } else {
+                    selectedValue2 = "0";
+                }
+                if(radioGroup3.getCheckedRadioButtonId() != -1) {
+                    radioButton3 = dialogView.findViewById(radioGroup3.getCheckedRadioButtonId());
+                    selectedValue3 = radioButton3.getText().toString();
+                } else {
+                    selectedValue3 = "0";
+                }
+
+                radioGroup1.clearCheck();
+                radioGroup2.clearCheck();
+                radioGroup3.clearCheck();
+
+                deXuat(selectedValue1, selectedValue2, selectedValue3);
+
+                //dialog.dismiss();;
+            }
+        });
+        dialog = builder.create();
+        dialog.show();
+    }
+
+    private void deXuat(String selectedValue1, String selectedValue2, String selectedValue3) {
+        int a = 0, b = 0, c = 0;
+        if(selectedValue1.equals("0") & selectedValue2.equals("0") & selectedValue3.equals("0")){
+            dialog.dismiss();
+        } else if (!selectedValue1.equals("0") & selectedValue2.equals("0") & selectedValue3.equals("0")) {
+            if(selectedValue1.equals("500k - 2,5tr")){
+                a = 1;
+            } else {
+                a = 2;
+            }
+        } else if(selectedValue1.equals("0") & !selectedValue2.equals("0") & selectedValue3.equals("0")){
+            if(selectedValue2.equals("Dưới 18t")){
+                b = 3;
+            } else {
+                b = 2;
+            }
+        } else if(selectedValue1.equals("0") & selectedValue2.equals("0") & !selectedValue3.equals("0")){
+            if(selectedValue3.equals("Nóng")) {
+                c = 1;
+            } else {
+                c = 2;
+            }
+        } else if(!selectedValue1.equals("0") & !selectedValue2.equals("0") & !selectedValue3.equals("0")){
+            if(selectedValue1.equals("500k - 2,5tr") & selectedValue2.equals("Dưới 18t") & selectedValue3.equals("Nóng")){
+                a = 1; b = 3; c = 1;
+            } else if (selectedValue1.equals("500k - 2,5tr") & selectedValue2.equals("Trên 18t") & selectedValue3.equals("Nóng")) {
+                a = 1; b = 2; c = 1;
+            } else if (selectedValue1.equals("500k - 2,5tr") & selectedValue2.equals("Dưới 18t") & selectedValue3.equals("Lạnh")) {
+                a = 1; b = 3; c = 2;
+            } else if (selectedValue1.equals("500k - 2,5tr") & selectedValue2.equals("Trên 18t") & selectedValue3.equals("Lạnh")) {
+                a = 1; b = 2; c = 2;
+            } else if (selectedValue1.equals("2,5tr - 4tr") & selectedValue2.equals("Dưới 18t") & selectedValue3.equals("Nóng")) {
+                a = 2; b = 3; c = 1;
+            } else if (selectedValue1.equals("2,5tr - 4tr") & selectedValue2.equals("Trên 18t") & selectedValue3.equals("Nóng")) {
+                a = 2; b = 2; c = 1;
+            } else if (selectedValue1.equals("1tr - 2,5tr") & selectedValue2.equals("Dưới 18t") & selectedValue3.equals("Lạnh")) {
+                a = 2; b = 3; c = 2;
+            } else {
+                a = 2; b = 2; c = 2;
+            }
+        }
+        listPlace = db.filterPlace(a, b, c, id);
+        setAdapterListView(listPlace);
+    }
+
 
     public void setAdapterListView(ArrayList<Place> list) {
         adapter = new PlaceAdapter(getApplicationContext(), list);

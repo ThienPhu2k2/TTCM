@@ -81,8 +81,8 @@ public class InsertDiaDanhActivity extends AppCompatActivity {
         String lng = edtLng.getText().toString().trim();
         String region = spnRegion.getSelectedItem().toString().trim();
         int regionValue = -1;
-        if (name == "" || image == "" || imageDetail1 == "" || imageDetail2 == "" ||
-                imageDetail3 == "" || imageDetail4 == "" || city == "" || lat =="" || lng == "") {
+        if (name.equals("") || image.equals("") || imageDetail1.equals("") || imageDetail2.equals("") ||
+                imageDetail3.equals("") || imageDetail4.equals("") || city.equals("") || lat.equals("") || lng.equals("")) {
             Toast.makeText(InsertDiaDanhActivity.this, "Chưa điền đầy đủ thông tin", Toast.LENGTH_SHORT).show();
         }
         else {

@@ -42,6 +42,12 @@ public class DBManager extends SQLiteOpenHelper {
     public static final String COLUMN_ID = "ID";
     public static final String COLUMN_DETAIL = "DETAIL";
 
+    //public static final String COLUMN_PRICE = "PRICE";
+
+    public static final String COLUMN_AGE = "AGE";
+
+    public static final String COLUMN_WEATHER = "WEATHER";
+
     public static final String TABLE_INTRODUCE = "gioithieu";
     public static final String COLUMN_INTRODUCE = "INTRODUCE";
 
@@ -337,12 +343,19 @@ public class DBManager extends SQLiteOpenHelper {
 
     public int deleteDiaDanh(int id) {
         SQLiteDatabase db = this.getWritableDatabase();
-        long result = db.delete(DBManager.TABLE_DIADANH, DBManager.COLUMN_ID_DIADANH + " = " + id, null);
-        if (result == 0) {
+        String sql = "SELECT * FROM " + DBManager.TABLE_PLACE + " WHERE " + DBManager.COLUMN_ID_DIADANH + " = " + id;
+        Cursor cursor = db.rawQuery(sql, null);
+        if(cursor.getCount() > 0){
             return 0;
         }
         else {
-            return 1;
+            long result = db.delete(DBManager.TABLE_DIADANH, DBManager.COLUMN_ID_DIADANH + " = " + id, null);
+            if (result == 0) {
+                return 0;
+            }
+            else {
+                return 1;
+            }
         }
     }
 
@@ -535,6 +548,80 @@ public class DBManager extends SQLiteOpenHelper {
         ArrayList<Place> list = new ArrayList<>();
         String sql = "SELECT " + COLUMN_ID + ", " + COLUMN_NAME + ", " + COLUMN_IMAGE + ", " + COLUMN_LATLNG + ", " + COLUMN_DETAIL + ", " + COLUMN_ID_DIADANH
                 + " FROM "+ TABLE_PLACE + " WHERE " + COLUMN_NAME + " LIKE '%" + s + "%'"+ " AND " + COLUMN_ID_DIADANH + " = " + id_diadanh;
+        Cursor cursor = db.rawQuery(sql,null);
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()){
+            Place place = new Place();
+            place.setId(Integer.parseInt(cursor.getString(cursor.getColumnIndex(DBManager.COLUMN_ID))));
+            place.setName(cursor.getString(cursor.getColumnIndex(DBManager.COLUMN_NAME)));
+            place.setImage(cursor.getString(cursor.getColumnIndex(DBManager.COLUMN_IMAGE)));
+            place.setLatlng(cursor.getString(cursor.getColumnIndex(DBManager.COLUMN_LATLNG)));
+            place.setDetail(cursor.getString(cursor.getColumnIndex(DBManager.COLUMN_DETAIL)));
+            place.setIdDiaDanh(Integer.parseInt(cursor.getString(cursor.getColumnIndex(DBManager.COLUMN_ID_DIADANH))));
+
+            list.add(place);
+            cursor.moveToNext();
+        }
+        Log.d("ketqua", String.valueOf(list));
+        return list;
+    }
+
+    public ArrayList<Place> filterPlace(int a, int b, int c, int id_diadanh){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ArrayList<Place> list = new ArrayList<>();
+        String sql = null;
+        if(a != 0 & b == 0 & c == 0){
+            if(a == 1){
+                sql = "SELECT " + COLUMN_ID + ", " + COLUMN_NAME + ", " + COLUMN_IMAGE + ", "
+                        + COLUMN_LATLNG + ", " + COLUMN_DETAIL + ", " + COLUMN_ID_DIADANH
+                        + " FROM "+ TABLE_PLACE + " WHERE " + COLUMN_PRICE
+                        + " BETWEEN 500000 AND 2500000 AND " + COLUMN_ID_DIADANH + " = " + id_diadanh;
+            }else {
+                sql = "SELECT " + COLUMN_ID + ", " + COLUMN_NAME + ", " + COLUMN_IMAGE + ", "
+                        + COLUMN_LATLNG + ", " + COLUMN_DETAIL + ", " + COLUMN_ID_DIADANH
+                        + " FROM "+ TABLE_PLACE + " WHERE " + COLUMN_PRICE 
+                        + " BETWEEN 2500000 AND 4000000 AND " + COLUMN_ID_DIADANH + " = " + id_diadanh;
+            }
+        } else if (a == 0 & b != 0 & c == 0) {
+            if(b == 1 || b == 3){
+                sql = "SELECT " + COLUMN_ID + ", " + COLUMN_NAME + ", " + COLUMN_IMAGE + ", " +
+                        "" + COLUMN_LATLNG + ", " + COLUMN_DETAIL + ", " + COLUMN_ID_DIADANH
+                        + " FROM "+ TABLE_PLACE + " WHERE " + COLUMN_AGE +
+                        " = 3 AND " + COLUMN_ID_DIADANH + " = " + id_diadanh;
+            } else {
+                sql = "SELECT " + COLUMN_ID + ", " + COLUMN_NAME + ", " + COLUMN_IMAGE + ", " +
+                        "" + COLUMN_LATLNG + ", " + COLUMN_DETAIL + ", " + COLUMN_ID_DIADANH
+                        + " FROM "+ TABLE_PLACE + " WHERE " + COLUMN_AGE +
+                        " = 2 AND " + COLUMN_ID_DIADANH + " = " + id_diadanh;
+            }
+        } else if (a == 0 & b == 0 & c != 0) {
+            if(c == 1){
+                sql = "SELECT " + COLUMN_ID + ", " + COLUMN_NAME + ", " + COLUMN_IMAGE + ", " +
+                        "" + COLUMN_LATLNG + ", " + COLUMN_DETAIL + ", " + COLUMN_ID_DIADANH
+                        + " FROM "+ TABLE_PLACE + " WHERE " + COLUMN_WEATHER +
+                        " = 1 AND " + COLUMN_ID_DIADANH + " = " + id_diadanh;
+            }else {
+                sql = "SELECT " + COLUMN_ID + ", " + COLUMN_NAME + ", " + COLUMN_IMAGE + ", " +
+                        "" + COLUMN_LATLNG + ", " + COLUMN_DETAIL + ", " + COLUMN_ID_DIADANH
+                        + " FROM "+ TABLE_PLACE + " WHERE " + COLUMN_WEATHER +
+                        " = 2 AND " + COLUMN_ID_DIADANH + " = " + id_diadanh;
+            }
+        } else if (a != 0 & b != 0 & c != 0) {
+            if(a == 1) {
+                sql = "SELECT " + COLUMN_ID + ", " + COLUMN_NAME + ", " + COLUMN_IMAGE + ", "
+                        + COLUMN_LATLNG + ", " + COLUMN_DETAIL + ", " + COLUMN_ID_DIADANH
+                        + " FROM "+ TABLE_PLACE + " WHERE " + COLUMN_PRICE
+                        + " BETWEEN 500000 AND 2500000 AND " + COLUMN_AGE + " = " + b + " AND "
+                        + COLUMN_WEATHER + " = " + c + " AND " + COLUMN_ID_DIADANH + " = " + id_diadanh;
+            } else {
+                sql = "SELECT " + COLUMN_ID + ", " + COLUMN_NAME + ", " + COLUMN_IMAGE + ", "
+                        + COLUMN_LATLNG + ", " + COLUMN_DETAIL + ", " + COLUMN_ID_DIADANH
+                        + " FROM "+ TABLE_PLACE + " WHERE " + COLUMN_PRICE
+                        + " BETWEEN 2500000 AND 4000000 AND " + COLUMN_AGE + " = " + b + " AND "
+                        + COLUMN_WEATHER + " = " + c + " AND " + COLUMN_ID_DIADANH + " = " + id_diadanh;
+            }
+        }
+
         Cursor cursor = db.rawQuery(sql,null);
         cursor.moveToFirst();
         while (!cursor.isAfterLast()){
